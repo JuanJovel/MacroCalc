@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/MacroCalc/static/js/main.3e86fc41.js",
+    "index.html": "/MacroCalc/index.html",
+    "main.3e86fc41.js.map": "/MacroCalc/static/js/main.3e86fc41.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.3e86fc41.js"
+  ]
+}
