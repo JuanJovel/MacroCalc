@@ -69,6 +69,13 @@ function validateField(event) {
     return;
   }
 
+  var val = parseFloat(event.target.value);
+
+  if (val <= 0) {
+    event.target.setAttribute("aria-invalid", "true");
+    return;
+  }
+
   event.target.setAttribute("aria-invalid", "false");
 
 
@@ -86,10 +93,20 @@ function calculateMacros() {
     return;
   }
 
+  var caloriesVal = parseFloat(calories.value) || 0;
+  var weightVal = parseFloat(weight.value) || 0;
 
-  var caloriesVal = parseInt(calories.value) || 0;
-  var weightVal = parseInt(weight.value) || 0;
+  // More validation of input values
+  if (caloriesVal === 0 || weightVal === 0) {
+    return;
+  }
 
+  if (caloriesVal < weightVal) {
+    calories.setAttribute("aria-invalid", "true");
+    return;
+  }
+
+  // Calculations
   var proteinInGrams = weightVal
   var fatInGrams = weightVal * 0.3
 
@@ -100,6 +117,17 @@ function calculateMacros() {
   var carbsInCalories = caloriesVal - proteinInCalories - fatInCalories
 
   var carbsInGrams = carbsInCalories / 4
+
+  // Verify calculations are not negative
+
+  if (proteinInCalories < 0 || proteinInGrams < 0 || fatInCalories < 0 || fatInGrams < 0 || carbsInCalories < 0 || carbsInGrams < 0) {
+    calories.setAttribute("aria-invalid", "true");
+    weight.setAttribute("aria-invalid", "true");
+    return;
+  }
+
+
+  // Update the UI
 
   document.getElementById("proteinInCals").innerText = proteinInCalories.toFixed(2) + " cal"
   document.getElementById("proteinInGrams").innerText = proteinInGrams.toFixed(2) + " g"
